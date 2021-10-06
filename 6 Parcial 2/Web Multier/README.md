@@ -1,0 +1,1 @@
+Basado en esta página: https://kubernetes.io/docs/tutorials/stateless-application/guestbook/
