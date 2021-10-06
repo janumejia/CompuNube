@@ -1,3 +1,7 @@
+Sacado de: https://code.vmware.com/samples/7611/running-pac-man-on-tanzu-kubernetes-grid-clusters
+
+En esta página hay más juegos similares para probar en kubernetes: https://williamlam.com/2020/06/interesting-kubernetes-application-demos.html
+
 # Running Pac-Man on Kubernetes
 
 Pac-Man the classic arcade game - deployment files for VMware Tanzu Kubernetes and all other Kubernetes distributions.
