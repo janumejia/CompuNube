@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"></script> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Datos</title>
+</head>
+<body>
+    <div class="titulo">
+        <h1>Nodo: {{data[1]}}</h1>
+    </div>
+
+    <div class="cont">
+
+        <div class="cont2">
+
+            <h4>Radiacion</h4>
+            <div class="esconder">
+
+                <div class="alert alert-secondary" role="alert">
+                    Cargando Datos
+                </div>
+
+            </div>
+
+            <div class="mostrar">
+
+                <canvas id="chart">
+
+                </canvas>
+
+            </div>
+
+            <hr><br>
+        </div>
+
+        <div class="cont2">
+
+            <h4>Temperatura</h4>
+            <div class="esconder">
+
+                <div class="alert alert-secondary" role="alert">
+                    Cargando Datos
+                </div>
+
+            </div>
+
+            <div class="mostrar">
+                <canvas id="chart2">
+
+                </canvas>
+            </div>
+
+            <hr><br>
+        </div>
+
+        <div class="cont2">
+
+            <h4>Humedad relativa</h4>
+            <div class="esconder">
+
+                <div class="alert alert-secondary" role="alert">
+                    Cargando Datos
+                </div>
+
+            </div>
+            <div class="mostrar">
+                <canvas id="chart3">
+
+                </canvas>
+            </div>
+
+            <hr><br>
+        </div>
+
+        <div class="cont2">
+
+            <h4>Sensación térmica</h4>
+            <div class="esconder">
+
+                <div class="alert alert-secondary" role="alert">
+                    Cargando Datos
+                </div>
+
+            </div>
+            <div class="mostrar">
+                <canvas id="chart4">
+
+                </canvas>
+            </div>
+
+            <hr><br>
+        </div>
+
+        <script>
+
+
+            //-------------
+            window.onload = function(){
+                let myChar, myChar2, myChar3, myChar4;
+                let getData = async(id) =>{
+                let a = await axios.get('/getDatos/' + id);
+                return a.data;
+                }
+
+                setInterval(async function (){ 
+
+                    const class_esconder = document.getElementsByClassName("esconder");
+                    const class_mostrar = document.getElementsByClassName("mostrar");
+
+                    class_esconder[0].style.display = "none";
+                    class_mostrar[0].style.display = "block";
+                    class_esconder[1].style.display = "none";
+                    class_mostrar[1].style.display = "block";
+                    class_esconder[2].style.display = "none";
+                    class_mostrar[2].style.display = "block";
+                    class_esconder[3].style.display = "none";
+                    class_mostrar[3].style.display = "block";
+
+                    var id = "{{data[0]}}";
+                    datos = await getData(id);
+
+                    let radiacion = [];
+                    let temperatura = [];
+                    let sensacion = [];
+                    let humedad = [];
+                    let horas = [];
+
+                    for(var i=0; i < datos.length; i++){
+
+                        dato = datos[i];
+                        radiacion.push(dato.radiacion);
+                        temperatura.push(dato.temperatura);
+                        sensacion.push(dato.sensacion);
+                        humedad.push(dato.humedad);
+                        horas.push(dato.hora);
+
+                    }
+                
+                    var ctx = document.getElementById("chart").getContext("2d");
+                    var ctx2 = document.getElementById("chart2").getContext("2d");
+                    var ctx3 = document.getElementById("chart3").getContext("2d");
+                    var ctx4 = document.getElementById("chart4").getContext("2d");
+                    try{
+                        myChar.destroy();
+                        myChar2.destroy();
+                        myChar3.destroy();
+                        myChar4.destroy();
+                    }catch(e){
+                        console.log("Cargando");
+                    }
+                    
+                        
+                    myChar = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: horas,
+                            datasets:[{
+                                label: 'Radiación (VIUV)',
+                                data: radiacion,
+                                backgroundColor: "rgba(255,153,0,0.8)"
+                            }
+                            ]
+                        }
+                    });
+
+                    myChar2 = new Chart(ctx2, {
+                        type: 'line',
+                        data: {
+                            labels: horas,
+                            datasets:[{
+                                label: 'Temperatura (°C)',
+                                data: temperatura,
+                                backgroundColor: "rgba(255,153,0,0.8)"
+                            }
+                            ]
+                        }
+                    });
+
+                    myChar3 = new Chart(ctx3, {
+                        type: 'line',
+                        data: {
+                            labels: horas,
+                            datasets:[{
+                                label: 'Humedad relativa (%)',
+                                data: humedad,
+                                backgroundColor: "rgba(255,153,0,0.8)"
+                            }
+                            ]
+                        }
+                    });
+
+                    myChar4 = new Chart(ctx4, {
+                        type: 'line',
+                        data: {
+                            labels: horas,
+                            datasets:[{
+                                label: 'Sensación térmica (°C)',
+                                data: sensacion,
+                                backgroundColor: "rgba(255,153,0,0.8)"
+                            }
+                            ]
+                        }
+                    });
+
+                }, 10000);
+
+            }
+
+            
+
+            /*
+            async function main(){
+
+                var id = "{{data[0]}}"
+                console.log(id);
+                datos = await getData(id);
+                console.log(datos);
+
+
+
+            }
+            
+            main();*/
+            /*                   
+            var ctx = document.getElementById("chart").getContext("2d");
+
+            var myChar = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: file.hora,
+                    datasets:[{
+                        label: 'Ruido (dB)',
+                        data: file.ruido,
+                        backgroundColor: "rgba(255,153,0,0.8)"
+                    },
+                    {
+                        label: 'Luminosidad (lx)',
+                        data: file.luz,
+                        backgroundColor: "rgba(30,112,51,0.8)"
+                    },
+                    {
+                        label: 'humedad relativa (%)',
+                        data: file.humedad,
+                        backgroundColor: "rgba(30, 82, 112, 0.8)"
+                    },
+                    {
+                        label: 'temperatura (°C)',
+                        data: file.temperatura,
+                        backgroundColor: "rgba(220, 177, 42, 1)"
+                    }]
+                }
+            });*/
+
+        </script>
+        
+    </div>
+
+
+</body>
+</html>
