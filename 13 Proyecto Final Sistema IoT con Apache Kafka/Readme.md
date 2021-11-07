@@ -1,4 +1,5 @@
 # Sistema IoT con Apache Kafka, Zookeeper, MongoDB y Flask
+<link href="path/to/css/icono-arg.css" rel="stylesheet">
 
 Proyecto final de la asignatura de computación en la nube.
 
