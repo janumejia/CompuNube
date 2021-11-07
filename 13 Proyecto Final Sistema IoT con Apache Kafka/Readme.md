@@ -15,3 +15,4 @@ En este video se muestra una DEMO del funcionamiento de este proyecto: https://d
 ```html
 <link href="path/to/css/icono-arg.css" rel="stylesheet">
 ```
+![Poncho](img/poncho.gif)
