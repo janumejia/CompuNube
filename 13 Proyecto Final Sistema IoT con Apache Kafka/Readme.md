@@ -1,5 +1,4 @@
 # Sistema IoT con Apache Kafka, Zookeeper, MongoDB y Flask
-<link href="path/to/css/icono-arg.css" rel="stylesheet">
 
 Proyecto final de la asignatura de computación en la nube.
 
@@ -12,3 +11,7 @@ Proyecto final de la asignatura de computación en la nube.
 En la guia paso a paso se explica los pasos a seguir para configurar el sistema IoT usando la tecnologia de Apache Kafka. También se incluye un articulo que contiene aspectos teoricos de lo que es apache kafka y zookeeper, asi como un ejemplo de su funcionamiento.
 
 En este video se muestra una DEMO del funcionamiento de este proyecto: https://drive.google.com/file/d/1Xn8rmRCsWxNDfPy5Mm44YWkdVJaEljEx/view?usp=sharing
+
+```html
+<link href="path/to/css/icono-arg.css" rel="stylesheet">
+```
